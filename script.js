@@ -114,9 +114,10 @@ backgroundMusic.preload = "auto";
 const trainSound = new Audio("/sfx/choochoo.mp3");
 trainSound.volume = 0.45;
 trainSound.preload = "auto";
+trainSound.loop = false;
 
 const buttonSound = new Audio("/sfx/pop.mp3");
-buttonSound.volume = 0.55;
+buttonSound.volume = 0.25;
 buttonSound.preload = "auto";
 buttonSound.load();
 
@@ -125,6 +126,7 @@ const audioWaves = audioToggle.querySelector(".audio-icon-waves");
 const audioMutedIcon = audioToggle.querySelector(".audio-icon-muted");
 const train = document.querySelector(".footer-train");
 let backgroundPlaybackPending = false;
+let initialTrainSoundPending = true;
 
 function removeAudioUnlockListeners() {
   document.removeEventListener("pointerdown", startBackgroundMusic);
@@ -140,6 +142,7 @@ function startBackgroundMusic() {
   backgroundMusic.play()
     .then(() => {
       removeAudioUnlockListeners();
+      playInitialTrainSound();
     })
     .catch(() => {})
     .finally(() => {
@@ -149,22 +152,39 @@ function startBackgroundMusic() {
 
 document.addEventListener("pointerdown", startBackgroundMusic);
 document.addEventListener("keydown", startBackgroundMusic);
-startBackgroundMusic();
 
 audioToggle.addEventListener("click", () => {
   backgroundMusic.muted = !backgroundMusic.muted;
   const isMuted = backgroundMusic.muted;
+  trainSound.muted = isMuted;
+  audioToggle.classList.toggle("is-muted", isMuted);
   audioToggle.setAttribute("aria-pressed", String(isMuted));
-  audioToggle.setAttribute("aria-label", `${isMuted ? "Unmute" : "Mute"} background music`);
-  audioToggle.title = `${isMuted ? "Unmute" : "Mute"} background music`;
+  audioToggle.setAttribute("aria-label", `${isMuted ? "Unmute" : "Mute"} audio`);
+  audioToggle.title = `${isMuted ? "Unmute" : "Mute"} audio`;
   audioWaves.hidden = isMuted;
   audioMutedIcon.hidden = !isMuted;
 });
 
-train.addEventListener("animationiteration", () => {
+function playTrainSound() {
   trainSound.currentTime = 0;
   trainSound.play().catch(() => {});
-});
+}
+
+function playInitialTrainSound() {
+  if (!initialTrainSoundPending) {
+    return;
+  }
+
+  initialTrainSoundPending = false;
+  trainSound.currentTime = 0;
+  trainSound.play().catch(() => {
+    initialTrainSoundPending = true;
+  });
+}
+
+playInitialTrainSound();
+startBackgroundMusic();
+train.addEventListener("click", playTrainSound);
 
 const editor = document.querySelector(".editor-surface textarea");
 const runButton = document.querySelector("#run-button");
@@ -173,11 +193,16 @@ const runStatus = document.querySelector("#run-status");
 const statusIndicator = document.querySelector(".ready-indicator");
 const examplesMenu = document.querySelector("#examples-menu");
 const lineNumbers = document.querySelector("#line-numbers");
+const consoleSurface = document.querySelector(".console-surface");
 const consoleEmpty = document.querySelector("#console-empty");
 const consoleOutput = document.querySelector("#console-output");
 const errorSection = document.querySelector(".error-section");
 const errorCount = document.querySelector("#error-count");
 const errorOutput = document.querySelector("#error-output");
+
+function fitConsoleSurface() {
+  consoleSurface.classList.toggle("is-expanded", consoleOutput.scrollHeight > 130);
+}
 
 const examples = {
   variables: `sprout root trees = 10;
@@ -273,6 +298,7 @@ function renderOutput(lines) {
 
   if (lines.length === 0) {
     consoleOutput.textContent = "No output from this bloom.";
+    fitConsoleSurface();
     return;
   }
 
@@ -283,6 +309,7 @@ function renderOutput(lines) {
     outputLine.textContent = line;
     consoleOutput.append(outputLine);
   });
+  fitConsoleSurface();
 }
 
 function renderError(errorType, message) {
@@ -297,6 +324,7 @@ function renderError(errorType, message) {
   errorCount.classList.add("has-error");
   errorOutput.textContent = "See console output above.";
   errorOutput.classList.add("has-error");
+  fitConsoleSurface();
 }
 
 function resetWorkspace() {
@@ -309,6 +337,7 @@ function resetWorkspace() {
   errorSection.hidden = true;
   errorCount.textContent = "0";
   errorCount.classList.remove("has-error");
+  consoleSurface.classList.remove("is-expanded");
   errorOutput.textContent = "Nothing caught this bloom.";
   errorOutput.classList.remove("has-error");
   runStatus.textContent = "READY";
@@ -338,6 +367,7 @@ runButton.addEventListener("click", async () => {
   errorSection.hidden = true;
   errorCount.textContent = "0";
   errorCount.classList.remove("has-error");
+  consoleSurface.classList.remove("is-expanded");
   errorOutput.textContent = "Bloom in progress.";
   errorOutput.classList.remove("has-error");
 

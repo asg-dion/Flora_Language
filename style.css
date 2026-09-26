@@ -28,6 +28,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   margin: 0;
+  overflow-x: hidden;
   color: var(--ink);
   background-color: var(--paper);
   background-image:
@@ -137,6 +138,12 @@ textarea {
   min-width: 0;
   display: grid;
   grid-template-rows: auto minmax(320px, 1fr) auto;
+}
+
+.console-column {
+  align-self: start;
+  align-content: start;
+  grid-template-rows: auto auto auto;
 }
 
 .panel-heading {
@@ -292,22 +299,29 @@ h2 {
 }
 
 .clear-button {
+  min-width: 90px;
   min-height: 37px;
-  padding: 0 11px;
+  padding: 0 14px;
   border: 1px solid rgba(88, 68, 48, 0.25);
   border-radius: 6px;
   color: var(--ink);
   background: #fbf6ec;
+  box-shadow: 0 3px 0 rgba(88, 68, 48, 0.2), 0 8px 15px rgba(77, 58, 41, 0.08);
   cursor: pointer;
-  font-size: 12px;
-  font-weight: 500;
-  transition: border-color 140ms ease, color 140ms ease, background-color 140ms ease;
+  font-size: 10px;
+  font-weight: 600;
+  transition: transform 140ms ease, box-shadow 140ms ease, background-color 140ms ease, border-color 140ms ease;
 }
 
 .clear-button:hover {
   border-color: var(--moss);
   color: var(--ink);
   background: #f4ebdd;
+}
+
+.clear-button:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 rgba(88, 68, 48, 0.2), 0 3px 8px rgba(77, 58, 41, 0.08);
 }
 
 .clear-button:focus-visible {
@@ -347,32 +361,38 @@ h2 {
 }
 
 .editor-moss-top {
-  top: -112px;
-  left: -28px;
+  top: -25px;
+  left: -23px;
   width: 140px;
 }
 
 .editor-moss-bottom {
-  bottom: 0;
-  left: -1px;
+  bottom: -11px;
+  left: -25px;
   width: 240px;
 }
 
 .editor-moss-right {
-  top: -1px;
+  top: -25px;
   right: -25px;
   width: 110px;
 }
 
 .console-moss-top {
-  top: -1px;
-  left: -25px;
-  width: 45px;
+  top: -17px;
+  left: -16px;
+  width: 70px;
+}
+
+.console-moss-right {
+  top: -13px;
+  right: -13px;
+  width: 48px;
 }
 
 .console-moss-bottom {
-  right: -1px;
-  bottom: 0;
+  right: -33px;
+  bottom: -30px;
   width: 220px;
 }
 
@@ -510,7 +530,7 @@ textarea::selection {
 
 .console-surface {
   position: relative;
-  height: auto;
+  height: 320px;
   min-height: 320px;
   overflow: visible;
   padding: 25px 25px 22px;
@@ -520,6 +540,10 @@ textarea::selection {
     linear-gradient(145deg, rgba(255, 255, 255, 0.36), transparent 65%),
     #e9dfd0;
   box-shadow: 0 13px 32px rgba(77, 58, 41, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+.console-surface.is-expanded {
+  height: auto;
 }
 
 .console-surface > :not(.panel-moss) {
@@ -539,7 +563,7 @@ textarea::selection {
 }
 
 .console-output {
-  min-height: 168px;
+  min-height: 130px;
   margin: 27px 0 0;
   color: var(--ink);
   font-family: var(--mono);
@@ -549,7 +573,7 @@ textarea::selection {
 }
 
 .console-empty {
-  min-height: 168px;
+  min-height: 130px;
   display: flex;
   align-items: flex-start;
   margin: 27px 0 0;
@@ -586,7 +610,8 @@ textarea::selection {
 .error-heading {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 10px;
 }
 
 h3 {
@@ -674,6 +699,13 @@ h3 {
   background: #f4ebdd;
 }
 
+.audio-toggle.is-muted,
+.audio-toggle.is-muted:hover {
+  border-color: var(--sakura-deep);
+  color: var(--sakura-deep);
+  background: rgba(211, 126, 126, 0.12);
+}
+
 .audio-toggle:focus-visible {
   outline: 2px solid var(--moss);
   outline-offset: 3px;
@@ -715,8 +747,8 @@ h3 {
   left: 100%;
   width: var(--train-width);
   aspect-ratio: 600 / 205;
+  cursor: pointer;
   animation: train-cross 58s linear infinite;
-  animation-delay: -36s;
 }
 
 .footer-train img {

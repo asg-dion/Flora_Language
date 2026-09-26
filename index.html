@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4ebdd">
+  <title>Flora | Garden Worktable</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="petal-weather" id="petal-weather" aria-hidden="true"></div>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="wordmark" href="#workspace" aria-label="Flora home">Flora<span class="wordmark-period">.</span></a>
+      <p class="tagline">A quiet place to grow a thought.</p>
+      <p class="header-note">GARDEN WORKTABLE <span aria-hidden="true">/</span> 01</p>
+    </header>
+    <hr class="header-divider">
+
+    <main id="workspace" class="workspace">
+      <section class="editor-column" aria-labelledby="editor-title">
+        <div class="panel-heading editor-heading">
+          <div>
+            <p class="eyebrow">01 <span>/</span> THE PAGE</p>
+            <h1 id="editor-title">A little Flora</h1>
+          </div>
+          <div class="editor-actions">
+            <details class="examples-menu" id="examples-menu">
+              <summary>Examples</summary>
+              <div class="example-options">
+                <button type="button" data-example="variables">Variables</button>
+                <button type="button" data-example="arithmetic">Arithmetic</button>
+                <button type="button" data-example="branch">Branch</button>
+              </div>
+            </details>
+            <button class="run-button" id="run-button" type="button">
+              <span class="play-mark" aria-hidden="true"></span>
+              Bloom
+            </button>
+            <button class="clear-button" id="clear-button" type="button">Clear</button>
+          </div>
+        </div>
+
+        <div class="editor-surface">
+          <img class="panel-moss editor-moss-top" src="assets/moss-editor-topleft.png" alt="" aria-hidden="true">
+          <img class="panel-moss editor-moss-bottom" src="assets/moss-editor-bottomleft.png" alt="" aria-hidden="true">
+          <img class="panel-moss editor-moss-right" src="assets/moss-editor-topright.png" alt="" aria-hidden="true">
+          <div class="line-numbers" id="line-numbers" aria-hidden="true">1<br>2<br>3<br>4<br>5<br>6</div>
+          <pre class="code-highlight" id="code-highlight" aria-hidden="true"></pre>
+          <textarea id="flora-source" aria-label="Flora code editor" spellcheck="false" autocapitalize="off" autocomplete="off">sprout root trees = 10;
+sprout root saplings = 5;
+trees = trees + saplings;
+branch(trees &gt; 5)
+    bloom "Forest is thriving";
+bloom trees;</textarea>
+        </div>
+
+        <div class="editor-footer">
+          <span>sample.flora</span>
+          <span>FLORA <span class="footer-separator">/</span> UTF-8</span>
+        </div>
+      </section>
+
+      <aside class="console-column" aria-labelledby="console-title">
+        <div class="panel-heading console-heading">
+          <div>
+            <p class="eyebrow">02 <span>/</span> THE LANTERN</p>
+            <h2 id="console-title">Console</h2>
+          </div>
+          <span class="ready-indicator" aria-live="polite"><span class="ready-dot"></span><span id="run-status">READY</span></span>
+        </div>
+
+        <div class="console-surface">
+          <img class="panel-moss console-moss-top" src="assets/moss-console-topleft.png" alt="" aria-hidden="true">
+          <img class="panel-moss console-moss-bottom" src="assets/moss-console-bottomright.png" alt="" aria-hidden="true">
+          <div class="console-caption">LAST BLOOM <span>·</span> SAMPLE.FLORA</div>
+          <p class="console-empty" id="console-empty">Press Bloom to see what grows.</p>
+          <pre class="console-output" id="console-output" aria-label="Console output" aria-live="polite" hidden></pre>
+          <section class="error-section" aria-labelledby="errors-title" hidden>
+            <div class="error-heading">
+              <h3 id="errors-title">Errors</h3>
+              <span class="error-count" id="error-count">0</span>
+            </div>
+            <p class="empty-error" id="error-output" aria-live="polite">Nothing caught this bloom.</p>
+          </section>
+        </div>
+
+        <p class="console-footnote">A small result, set gently into the page.</p>
+      </aside>
+    </main>
+
+    <div class="train-strip" aria-hidden="true">
+      <div class="footer-train">
+        <img src="assets/train.png" alt="" width="600" height="205">
+        <div class="smoke-puff smoke-puff-one"></div>
+        <div class="smoke-puff smoke-puff-two"></div>
+        <div class="smoke-puff smoke-puff-three"></div>
+        <div class="smoke-puff smoke-puff-four"></div>
+        <div class="smoke-puff smoke-puff-five"></div>
+        <div class="smoke-puff smoke-puff-six"></div>
+      </div>
+    </div>
+
+    <footer class="page-footer">
+      <span>Made for curious things.</span>
+      <span>FLORA <span class="footer-separator">/</span> 0.1</span>
+    </footer>
+  </div>
+  <script src="script.js" defer></script>
+</body>
+</html>

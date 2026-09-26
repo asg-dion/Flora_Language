@@ -106,6 +106,66 @@ petalFallStyles.textContent = `
 `;
 document.head.append(petalFallStyles);
 
+const backgroundMusic = new Audio("/sfx/background.mp3");
+backgroundMusic.loop = true;
+backgroundMusic.volume = 0.25;
+backgroundMusic.preload = "auto";
+
+const trainSound = new Audio("/sfx/choochoo.mp3");
+trainSound.volume = 0.45;
+trainSound.preload = "auto";
+
+const buttonSound = new Audio("/sfx/pop.mp3");
+buttonSound.volume = 0.55;
+buttonSound.preload = "auto";
+buttonSound.load();
+
+const audioToggle = document.querySelector("#audio-toggle");
+const audioWaves = audioToggle.querySelector(".audio-icon-waves");
+const audioMutedIcon = audioToggle.querySelector(".audio-icon-muted");
+const train = document.querySelector(".footer-train");
+let backgroundPlaybackPending = false;
+
+function removeAudioUnlockListeners() {
+  document.removeEventListener("pointerdown", startBackgroundMusic);
+  document.removeEventListener("keydown", startBackgroundMusic);
+}
+
+function startBackgroundMusic() {
+  if (!backgroundMusic.paused || backgroundPlaybackPending) {
+    return;
+  }
+
+  backgroundPlaybackPending = true;
+  backgroundMusic.play()
+    .then(() => {
+      removeAudioUnlockListeners();
+    })
+    .catch(() => {})
+    .finally(() => {
+      backgroundPlaybackPending = false;
+    });
+}
+
+document.addEventListener("pointerdown", startBackgroundMusic);
+document.addEventListener("keydown", startBackgroundMusic);
+startBackgroundMusic();
+
+audioToggle.addEventListener("click", () => {
+  backgroundMusic.muted = !backgroundMusic.muted;
+  const isMuted = backgroundMusic.muted;
+  audioToggle.setAttribute("aria-pressed", String(isMuted));
+  audioToggle.setAttribute("aria-label", `${isMuted ? "Unmute" : "Mute"} background music`);
+  audioToggle.title = `${isMuted ? "Unmute" : "Mute"} background music`;
+  audioWaves.hidden = isMuted;
+  audioMutedIcon.hidden = !isMuted;
+});
+
+train.addEventListener("animationiteration", () => {
+  trainSound.currentTime = 0;
+  trainSound.play().catch(() => {});
+});
+
 const editor = document.querySelector(".editor-surface textarea");
 const runButton = document.querySelector("#run-button");
 const clearButton = document.querySelector("#clear-button");
@@ -257,6 +317,14 @@ function resetWorkspace() {
 }
 
 clearButton.addEventListener("click", resetWorkspace);
+
+function playButtonSound() {
+  buttonSound.currentTime = 0;
+  buttonSound.play().catch(() => {});
+}
+
+runButton.addEventListener("click", playButtonSound);
+clearButton.addEventListener("click", playButtonSound);
 
 runButton.addEventListener("click", async () => {
   runButton.disabled = true;

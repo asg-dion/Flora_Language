@@ -653,6 +653,51 @@ h3 {
   z-index: 3;
 }
 
+.audio-toggle {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  flex: 0 0 30px;
+  place-items: center;
+  padding: 0;
+  border: 1px solid rgba(88, 68, 48, 0.2);
+  border-radius: 50%;
+  color: var(--ink-soft);
+  background: #fbf6ec;
+  cursor: pointer;
+  transition: color 140ms ease, background-color 140ms ease, border-color 140ms ease;
+}
+
+.audio-toggle:hover {
+  border-color: var(--moss);
+  color: var(--ink);
+  background: #f4ebdd;
+}
+
+.audio-toggle:focus-visible {
+  outline: 2px solid var(--moss);
+  outline-offset: 3px;
+}
+
+.audio-toggle svg {
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.6;
+}
+
+.audio-toggle svg > path:first-child {
+  fill: currentColor;
+  stroke: none;
+}
+
+.audio-toggle [hidden] {
+  display: none;
+}
+
 .train-strip {
   position: relative;
   flex: 0 0 70px;

@@ -38,6 +38,12 @@ def asset(filename):
     return send_from_directory(PROJECT_DIR / "assets", filename)
 
 
+@app.get("/sfx/<path:filename>")
+def sound_effect(filename):
+    """Serve audio files used by the front end."""
+    return send_from_directory(PROJECT_DIR / "sfx", filename)
+
+
 @app.post("/run")
 def run_flora():
     """Tokenize, parse, and run Flora source provided as JSON."""

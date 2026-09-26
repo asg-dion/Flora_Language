@@ -197,7 +197,6 @@ const consoleSurface = document.querySelector(".console-surface");
 const consoleEmpty = document.querySelector("#console-empty");
 const consoleOutput = document.querySelector("#console-output");
 const errorSection = document.querySelector(".error-section");
-const errorCount = document.querySelector("#error-count");
 const errorOutput = document.querySelector("#error-output");
 
 function fitConsoleSurface() {
@@ -320,8 +319,6 @@ function renderError(errorType, message) {
   consoleOutput.hidden = false;
   errorSection.hidden = false;
   consoleOutput.textContent = fullMessage;
-  errorCount.textContent = "1";
-  errorCount.classList.add("has-error");
   errorOutput.textContent = "See console output above.";
   errorOutput.classList.add("has-error");
   fitConsoleSurface();
@@ -335,8 +332,6 @@ function resetWorkspace() {
   consoleOutput.replaceChildren();
   consoleOutput.classList.remove("is-error");
   errorSection.hidden = true;
-  errorCount.textContent = "0";
-  errorCount.classList.remove("has-error");
   consoleSurface.classList.remove("is-expanded");
   errorOutput.textContent = "Nothing caught this bloom.";
   errorOutput.classList.remove("has-error");
@@ -365,8 +360,6 @@ runButton.addEventListener("click", async () => {
   consoleEmpty.hidden = true;
   consoleOutput.hidden = true;
   errorSection.hidden = true;
-  errorCount.textContent = "0";
-  errorCount.classList.remove("has-error");
   consoleSurface.classList.remove("is-expanded");
   errorOutput.textContent = "Bloom in progress.";
   errorOutput.classList.remove("has-error");

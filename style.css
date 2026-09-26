@@ -79,13 +79,13 @@ textarea {
   display: flex;
   align-items: center;
   gap: 25px;
-  padding-block: 12px;
+  padding: 24px 0 12px;
 }
 
 .header-divider {
   flex: none;
   height: 1px;
-  margin: 24px 0;
+  margin: 12px 0 24px;
   border: 0;
   background: var(--line);
 }
@@ -622,17 +622,6 @@ h3 {
   font-weight: 600;
 }
 
-.error-count {
-  min-width: 22px;
-  height: 22px;
-  display: grid;
-  place-items: center;
-  border: 1px solid rgba(104, 116, 91, 0.28);
-  border-radius: 50%;
-  color: var(--moss);
-  font-size: 10px;
-}
-
 .empty-error {
   margin: 11px 0 0;
   color: var(--ink-soft);
@@ -641,13 +630,8 @@ h3 {
   font-style: italic;
 }
 
-.empty-error.has-error,
-.error-count.has-error {
+.empty-error.has-error {
   color: var(--clay);
-}
-
-.error-count.has-error {
-  border-color: rgba(169, 101, 78, 0.36);
 }
 
 .console-footnote {
